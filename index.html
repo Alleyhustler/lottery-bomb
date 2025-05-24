@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOTTERY BOMB | Defuse or Detonate</title>
+<link href="https://fonts.googleapis.com/css2?family=Joti+One&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+  font-family: "Joti One", serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff5959;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .explain-btn {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 16px;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .explain-btn:hover {
+            border-color: #ff5959;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+
+        .wallet-section {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .wallet-input {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            padding: 10px 16px;
+            border-radius: 8px;
+            color: #ffffff;
+            width: 200px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .wallet-input:focus {
+            outline: none;
+            border-color: #ff5959;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+
+        .connect-btn {
+            background: linear-gradient(45deg, #ff5959, #cc0000);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .connect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+        }
+
+        .connect-btn.connected {
+            background: linear-gradient(45deg, #00ff00, #00cc00);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 40px;
+            margin-top: 40px;
+            align-items: start;
+        }
+
+        /* Bomb Section */
+        .bomb-section {
+            text-align: center;
+            padding: 40px;
+            background: rgba(10, 10, 10, 0.6);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .bomb-container {
+            position: relative;
+            margin: 40px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bomb-image {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            animation: pulse 2s infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.4));
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .bomb-image:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 50px rgba(255, 0, 0, 0.6));
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .countdown {
+            font-size: 48px;
+            font-weight: 900;
+            color: #ff5959;
+            text-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+            margin: 20px 0;
+  font-family: "Joti One", serif;
+        }
+
+        .jackpot-amount {
+            font-size: 32px;
+            font-weight: 700;
+            color: #5cce5c;
+            text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: rgba(20, 20, 20, 0.8);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff5959;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        /* Control Panel */
+        .control-panel {
+            background: rgba(10, 10, 10, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 20px;
+        }
+
+        .panel-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ff5959;
+            margin-bottom: 25px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ticket-price {
+            background: rgba(20, 20, 20, 0.8);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .price-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .price-amount {
+            font-size: 20px;
+            font-weight: 700;
+            color: #00ff00;
+            margin-top: 5px;
+        }
+
+        .buy-ticket-btn {
+            width: 100%;
+            background: linear-gradient(45deg, #ff5959, #cc0000);
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .buy-ticket-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(255, 0, 0, 0.4);
+        }
+
+        .buy-ticket-btn:disabled {
+            background: #333;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .free-ticket-notice {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #00ff00;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Activity Feed */
+        .activity-feed {
+            max-height: 300px;
+            overflow-y: auto;
+            background: rgba(5, 5, 5, 0.8);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+        }
+
+        .activity-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ff5959;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .activity-item {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 12px;
+            color: #ccc;
+            animation: slideIn 0.5s ease;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .wallet-address {
+            color: #ff5959;
+  font-family: "Joti One", serif;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: #ff5959;
+        }
+
+        .modal h2 {
+            color: #ff5959;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-family: "Rubik Distressed", system-ui;
+        }
+
+        .modal p {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .modal ul {
+            color: #ccc;
+            line-height: 1.8;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            color: #ff5959;
+            font-weight: bold;
+        }
+
+        .wallet-modal {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .wallet-modal h3 {
+            color: #ff5959;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .wallet-modal p {
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .wallet-modal input {
+            width: 100%;
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            padding: 12px;
+            border-radius: 8px;
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .wallet-modal .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .wallet-modal button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .phantom-btn {
+            background: linear-gradient(45deg, #9945ff, #7c3aed);
+            color: white;
+        }
+
+        .manual-btn {
+            background: linear-gradient(45deg, #ff5959, #cc0000);
+            color: white;
+        }
+
+        .cancel-btn {
+            background: #333;
+            color: #ccc;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .control-panel {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .header-controls {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .wallet-section {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .wallet-input {
+                width: 200px;
+            }
+            
+            .bomb-image {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .countdown {
+                font-size: 36px;
+            }
+
+            .modal-content {
+                margin: 10% auto;
+                width: 95%;
+                padding: 20px;
+            }
+        }
+
+        /* Scrollbar */
+        .activity-feed::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .activity-feed::-webkit-scrollbar-track {
+            background: rgba(20, 20, 20, 0.5);
+            border-radius: 3px;
+        }
+
+        .activity-feed::-webkit-scrollbar-thumb {
+            background: rgba(255, 0, 0, 0.5);
+            border-radius: 3px;
+        }
+
+        .activity-feed::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 0, 0, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">SOLANA LOTTERY BOMB</div>
+            <div class="header-controls">
+                <button class="explain-btn" id="explainBtn">How It Works</button>
+                <div class="wallet-section">
+                    <input type="text" class="wallet-input" placeholder="Wallet address..." id="walletInput" readonly>
+                    <button class="connect-btn" id="connectBtn">Connect Wallet</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="bomb-section">
+                <div class="jackpot-amount" id="jackpotAmount"> 2.47 SOL</div>
+                <div class="bomb-container">
+                    <img src="Progetto senza titolo.png" alt="Bomb" class="bomb-image" id="bombImage">
+                </div>
+                <div class="countdown" id="countdown">05:42</div>
+                <p style="color: #999; margin-bottom: 30px;">Time remaining until detonation</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-value" id="totalTickets">247</span>
+                        <span class="stat-label">Total Tickets</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="lastBuyer">3x2...9f4</span>
+                        <span class="stat-label">Last Buyer</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="timeExtension">+30s</span>
+                        <span class="stat-label">Per Ticket</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="burnAmount">50%</span>
+                        <span class="stat-label">Burn Rate</span>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="control-panel">
+                <h2 class="panel-title">Defuse the Bomb</h2>
+                
+                <div class="free-ticket-notice" id="freeTicketNotice">
+                    Connect wallet and claim your free ticket
+                </div>
+                
+                <div class="ticket-price">
+                    <div class="price-label">Ticket Price</div>
+                    <div class="price-amount" id="ticketPrice">FREE</div>
+                </div>
+                
+                <button class="buy-ticket-btn" id="buyTicketBtn" disabled>
+                   Buy Ticket & Defuse
+                </button>
+                
+                <div class="activity-feed">
+                    <div class="activity-title">🔴 Live Activity</div>
+                    <div id="activityList">
+                        <div class="activity-item">🚀 Game started! Get your free ticket!</div>
+                        <div class="activity-item">Ticket bought by <span class="wallet-address">7x9...3a1</span> • Timer +30s</div>
+                        <div class="activity-item">Ticket bought by <span class="wallet-address">4k2...8f7</span> • Timer +30s</div>
+                        <div class="activity-item">Ticket bought by <span class="wallet-address">9m5...2c3</span> • Timer +30s</div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <!-- Explanation Modal -->
+    <div id="explanationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeExplanation">&times;</span>
+            <h2>💣 How Lottery Bomb Works</h2>
+            <p>Welcome to the most explosive lottery experience on Solana! Here's how it works:</p>
+            
+            <p><span class="highlight">🎯 The Concept:</span></p>
+            <p>A jackpot that explodes if no one wins in time. Players buy tickets to defuse the bomb and extend the countdown timer.</p>
+            
+            <p><span class="highlight">🎮 Game Mechanics:</span></p>
+            <ul>
+                <li><strong>Buy a ticket</strong> to defuse the bomb and add +30 seconds to the timer</li>
+                <li><strong>Every ticket purchased</strong> increases the jackpot amount</li>
+                <li><strong>The last person</strong> to buy a ticket before the timer hits zero wins!</li>
+                <li><strong>If nobody buys tickets</strong> and the timer reaches zero, the bomb "explodes"</li>
+            </ul>
+            
+            <p><span class="highlight">💥 What Happens When It Explodes:</span></p>
+            <ul>
+                <li><strong>50% of the jackpot</strong> gets burned (removed forever)</li>
+                <li><strong>50% of the jackpot</strong> goes to the last ticket buyer</li>
+                <li><strong>New round starts</strong> automatically with fresh timer</li>
+            </ul>
+            
+            <p><span class="highlight">🎁 Special Features:</span></p>
+            <ul>
+                <li><strong>First ticket is FREE</strong> for every new participant</li>
+                <li><strong>Live activity feed</strong> shows all ticket purchases in real-time</li>
+                <li><strong>Timer gets more intense</strong> as it approaches zero</li>
+                <li><strong>Fully decentralized</strong> on Solana blockchain</li>
+            </ul>
+            
+            <p>Ready to defuse the bomb? Connect your wallet and get started! 💣</p>
+        </div>
+    </div>
+
+    <!-- Wallet Connection Modal -->
+    <div id="walletModal" class="modal">
+        <div class="wallet-modal">
+            <span class="close" id="closeWallet">&times;</span>
+            <h3>Connect Your Wallet</h3>
+            <p>To buy tickets and participate, you need to connect a wallet first.</p>
+            <div class="buttons">
+                <button class="phantom-btn" id="phantomBtn">Connect Phantom</button>
+                <button class="manual-btn" id="manualBtn">Enter Manually</button>
+                <button class="cancel-btn" id="cancelBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manual Wallet Input Modal -->
+    <div id="manualWalletModal" class="modal">
+        <div class="wallet-modal">
+            <span class="close" id="closeManual">&times;</span>
+            <h3>Enter Wallet Address</h3>
+            <p>Paste your Solana wallet address below:</p>
+            <input type="text" id="manualWalletInput" placeholder="Enter your wallet address...">
+            <div class="buttons">
+                <button class="manual-btn" id="confirmManualBtn">Confirm</button>
+                <button class="cancel-btn" id="cancelManualBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class LotteryBomb {
+            constructor() {
+                this.timeLeft = 342; // 5:42 in seconds
+                this.totalTickets = 247;
+                this.jackpotAmount = 2.47;
+                this.ticketPrice = 0.01;
+                this.hasFreeTicket = true;
+                this.walletConnected = false;
+                this.userWallet = '';
+                this.lastBuyer = '3x2...9f4';
+                
+                this.initializeElements();
+                this.startCountdown();
+                this.setupEventListeners();
+                this.simulateActivity();
+                this.updateWalletStatus();
+            }
+            
+            initializeElements() {
+                this.countdownEl = document.getElementById('countdown');
+                this.jackpotEl = document.getElementById('jackpotAmount');
+                this.totalTicketsEl = document.getElementById('totalTickets');
+                this.lastBuyerEl = document.getElementById('lastBuyer');
+                this.ticketPriceEl = document.getElementById('ticketPrice');
+                this.buyTicketBtn = document.getElementById('buyTicketBtn');
+                this.connectBtn = document.getElementById('connectBtn');
+                this.walletInput = document.getElementById('walletInput');
+                this.freeTicketNotice = document.getElementById('freeTicketNotice');
+                this.activityList = document.getElementById('activityList');
+                this.bombEmoji = document.getElementById('bombEmoji');
+                
+                // Modal elements
+                this.explainBtn = document.getElementById('explainBtn');
+                this.explanationModal = document.getElementById('explanationModal');
+                this.walletModal = document.getElementById('walletModal');
+                this.manualWalletModal = document.getElementById('manualWalletModal');
+            }
+            
+            startCountdown() {
+                setInterval(() => {
+                    if (this.timeLeft > 0) {
+                        this.timeLeft--;
+                        this.updateCountdownDisplay();
+                    } else {
+                        this.explodeBomb();
+                    }
+                }, 1000);
+            }
+            
+            updateCountdownDisplay() {
+                const minutes = Math.floor(this.timeLeft / 60);
+                const seconds = this.timeLeft % 60;
+                this.countdownEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Color changes as time gets critical
+                if (this.timeLeft < 60) {
+                    this.countdownEl.style.color = '#ff4444';
+                    this.countdownEl.style.animation = 'pulse 0.5s infinite';
+                    this.bombEmoji.style.animation = 'pulse 0.8s infinite';
+                    this.bombEmoji.style.filter = 'drop-shadow(0 0 50px rgba(255, 0, 0, 0.8))';
+                } else if (this.timeLeft < 120) {
+                    this.countdownEl.style.color = '#ff8800';
+                    this.bombEmoji.style.filter = 'drop-shadow(0 0 40px rgba(255, 100, 0, 0.6))';
+                }
+            }
+            
+            setupEventListeners() {
+                // Wallet connection
+                this.connectBtn.addEventListener('click', () => this.showWalletModal());
+                this.buyTicketBtn.addEventListener('click', () => this.handleTicketPurchase());
+                
+                // Explanation modal
+                this.explainBtn.addEventListener('click', () => {
+                    this.explanationModal.style.display = 'block';
+                });
+                
+                // Close modals
+                document.getElementById('closeExplanation').addEventListener('click', () => {
+                    this.explanationModal.style.display = 'none';
+                });
+                
+                document.getElementById('closeWallet').addEventListener('click', () => {
+                    this.walletModal.style.display = 'none';
+                });
+                
+                document.getElementById('closeManual').addEventListener('click', () => {
+                    this.manualWalletModal.style.display = 'none';
+                });
+                
+                // Wallet connection options
+                document.getElementById('phantomBtn').addEventListener('click', () => this.connectPhantom());
+                document.getElementById('manualBtn').addEventListener('click', () => this.showManualWalletModal());
+                document.getElementById('cancelBtn').addEventListener('click', () => {
+                    this.walletModal.style.display = 'none';
+                });
+                
+                // Manual wallet input
+                document.getElementById('confirmManualBtn').addEventListener('click', () => this.confirmManualWallet());
+                document.getElementById('cancelManualBtn').addEventListener('click', () => {
+                    this.manualWalletModal.style.display = 'none';
+                });
+                
+                // Close modals when clicking outside
+                window.addEventListener('click', (e) => {
+                    if (e.target === this.explanationModal) {
+                        this.explanationModal.style.display = 'none';
+                    }
+                    if (e.target === this.walletModal) {
+                        this.walletModal.style.display = 'none';
+                    }
+                    if (e.target === this.manualWalletModal) {
+                        this.manualWalletModal.style.display = 'none';
+                    }
+                });
+                
+                // Bomb click interaction
+                this.bombEmoji.addEventListener('click', () => {
+                    this.bombEmoji.style.transform = 'scale(1.2)';
+                    setTimeout(() => {
+                        this.bombEmoji.style.transform = 'scale(1)';
+                    }, 200);
+                });
+            }
+            
+            showWalletModal() {
+                if (!this.walletConnected) {
+                    this.walletModal.style.display = 'block';
+                }
+            }
+            
+            showManualWalletModal() {
+                this.walletModal.style.display = 'none';
+                this.manualWalletModal.style.display = 'block';
+            }
+            
+            connectPhantom() {
+                this.walletModal.style.display = 'none';
+                
+                // Simulate Phantom wallet connection
+                setTimeout(() => {
+                    this.walletConnected = true;
+                    this.userWallet = this.generateRandomWallet();
+                    this.walletInput.value = this.formatWallet(this.userWallet);
+                    this.connectBtn.textContent = 'Connected';
+                    this.connectBtn.classList.add('connected');
+                    this.updateWalletStatus();
+                    this.addActivity(`✅ Wallet connected: ${this.formatWallet(this.userWallet)}`);
+                }, 1500);
+            }
+            
+            confirmManualWallet() {
+                const manualWallet = document.getElementById('manualWalletInput').value.trim();
+                
+                if (manualWallet.length >= 32) {
+                    this.walletConnected = true;
+                    this.userWallet = manualWallet;
+                    this.walletInput.value = this.formatWallet(manualWallet);
+                    this.connectBtn.textContent = 'Connected';
+                    this.connectBtn.classList.add('connected');
+                    this.manualWalletModal.style.display = 'none';
+                    this.updateWalletStatus();
+                    this.addActivity(`✅ Wallet connected: ${this.formatWallet(manualWallet)}`);
+                    document.getElementById('manualWalletInput').value = '';
+                } else {
+                    alert('Please enter a valid Solana wallet address (minimum 32 characters)');
+                }
+            }
+            
+            handleTicketPurchase() {
+                if (!this.walletConnected) {
+                    this.showWalletModal();
+                    return;
+                }
+                
+                this.buyTicket();
+            }
+            
+            updateWalletStatus() {
+                this.buyTicketBtn.disabled = !this.walletConnected;
+                
+                if (this.walletConnected) {
+                    this.buyTicketBtn.style.opacity = '1';
+                    this.buyTicketBtn.style.cursor = 'pointer';
+                } else {
+                    this.buyTicketBtn.style.opacity = '0.5';
+                    this.buyTicketBtn.style.cursor = 'not-allowed';
+                }
+            }
+            
+            buyTicket() {
+                if (!this.walletConnected) return;
+                
+                // Process ticket purchase
+                this.totalTickets++;
+                this.timeLeft += 30; // Add 30 seconds
+                this.lastBuyer = this.formatWallet(this.userWallet);
+                
+                if (this.hasFreeTicket) {
+                    this.hasFreeTicket = false;
+                    this.freeTicketNotice.style.display = 'none';
+                    this.ticketPriceEl.textContent = `${this.ticketPrice} SOL`;
+                } else {
+                    this.jackpotAmount += this.ticketPrice;
+                }
+                
+                // Update display
+                this.totalTicketsEl.textContent = this.totalTickets;
+                this.lastBuyerEl.textContent = this.lastBuyer;
+                this.jackpotEl.textContent = `💰 ${this.jackpotAmount.toFixed(2)} SOL`;
+                
+                // Add activity
+                this.addActivity(`🎫 Ticket bought by <span class="wallet-address">${this.lastBuyer}</span> • Timer +30s`);
+                
+                // Button feedback
+                const originalText = this.buyTicketBtn.textContent;
+                this.buyTicketBtn.textContent = '✅ Ticket Purchased!';
+                this.buyTicketBtn.style.background = 'linear-gradient(45deg, #00ff00, #00cc00)';
+                
+                // Bomb visual feedback
+                this.bombEmoji.style.transform = 'scale(0.9)';
+                this.bombEmoji.style.filter = 'drop-shadow(0 0 30px rgba(0, 255, 0, 0.6))';
+                
+                setTimeout(() => {
+                    this.buyTicketBtn.textContent = this.hasFreeTicket ? '🎫 Buy Free Ticket' : '🎫 Buy Another Ticket';
+                    this.buyTicketBtn.style.background = 'linear-gradient(45deg, #ff5959, #cc0000)';
+                    this.bombEmoji.style.transform = 'scale(1)';
+                    this.bombEmoji.style.filter = 'drop-shadow(0 0 30px rgba(255, 0, 0, 0.4))';
+                }, 2000);
+            }
+            
+            simulateActivity() {
+                setInterval(() => {
+                    if (Math.random() < 0.3) { // 30% chance every interval
+                        const randomWallet = this.generateRandomWallet();
+                        this.totalTickets++;
+                        this.timeLeft += 30;
+                        this.jackpotAmount += this.ticketPrice;
+                        this.lastBuyer = this.formatWallet(randomWallet);
+                        
+                        // Update display
+                        this.totalTicketsEl.textContent = this.totalTickets;
+                        this.lastBuyerEl.textContent = this.lastBuyer;
+                        this.jackpotEl.textContent = `💰 ${this.jackpotAmount.toFixed(2)} SOL`;
+                        
+                        this.addActivity(`🎫 Ticket bought by <span class="wallet-address">${this.lastBuyer}</span> • Timer +30s`);
+                        
+                        // Visual feedback for automated purchases
+                        if (Math.random() < 0.5) {
+                            this.bombEmoji.style.transform = 'scale(0.95)';
+                            setTimeout(() => {
+                                this.bombEmoji.style.transform = 'scale(1)';
+                            }, 300);
+                        }
+                    }
+                }, 8000); // Check every 8 seconds
+            }
+            
+            generateRandomWallet() {
+                const chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+                let result = '';
+                for (let i = 0; i < 44; i++) {
+                    result += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return result;
+            }
+            
+            formatWallet(wallet) {
+                if (wallet.length < 6) return wallet;
+                return `${wallet.substring(0, 3)}...${wallet.substring(wallet.length - 3)}`;
+            }
+            
+            addActivity(message) {
+                const activityItem = document.createElement('div');
+                activityItem.className = 'activity-item';
+                activityItem.innerHTML = message;
+                
+                this.activityList.insertBefore(activityItem, this.activityList.firstChild);
+                
+                // Keep only last 15 activities
+                while (this.activityList.children.length > 15) {
+                    this.activityList.removeChild(this.activityList.lastChild);
+                }
+            }
+            
+            explodeBomb() {
+                // Handle bomb explosion
+                const burnAmount = this.jackpotAmount * 0.5;
+                const winnerAmount = this.jackpotAmount * 0.5;
+                
+                // Visual explosion effect
+                this.bombEmoji.textContent = '💥';
+                this.bombEmoji.style.transform = 'scale(1.5)';
+                this.bombEmoji.style.filter = 'drop-shadow(0 0 100px rgba(255, 0, 0, 1)) brightness(2)';
+                
+                this.addActivity(`💥 BOMB EXPLODED! ${burnAmount.toFixed(2)} SOL burned, ${winnerAmount.toFixed(2)} SOL to ${this.lastBuyer}`);
+                this.countdownEl.textContent = '💥 BOOM!';
+                this.countdownEl.style.color = '#ff5959';
+                this.countdownEl.style.fontSize = '60px';
+                
+                // Show explosion effects
+                document.body.style.animation = 'shake 0.5s ease-in-out';
+                setTimeout(() => {
+                    document.body.style.animation = 'none';
+                }, 500);
+                
+                // Reset game after 10 seconds
+                setTimeout(() => {
+                    this.resetGame();
+                }, 10000);
+            }
+            
+            resetGame() {
+                this.timeLeft = 300; // 5 minutes
+                this.totalTickets = Math.floor(Math.random() * 50); // Random starting tickets
+                this.jackpotAmount = Math.random() * 5; // Random starting jackpot
+                this.lastBuyer = 'None';
+                this.hasFreeTicket = true;
+                
+                // Reset displays
+                this.totalTicketsEl.textContent = this.totalTickets;
+                this.jackpotEl.textContent = `💰 ${this.jackpotAmount.toFixed(2)} SOL`;
+                this.lastBuyerEl.textContent = this.lastBuyer;
+                this.freeTicketNotice.style.display = 'block';
+                this.ticketPriceEl.textContent = 'FREE';
+                this.countdownEl.style.color = '#ff5959';
+                this.countdownEl.style.animation = 'none';
+                this.countdownEl.style.fontSize = '48px';
+                
+                // Reset bomb appearance
+                this.bombEmoji.textContent = '💣';
+                this.bombEmoji.style.transform = 'scale(1)';
+                this.bombEmoji.style.filter = 'drop-shadow(0 0 30px rgba(255, 0, 0, 0.4))';
+                this.bombEmoji.style.animation = 'pulse 2s infinite';
+                
+                // Update button text
+                this.buyTicketBtn.textContent = '🎫 Buy Free Ticket';
+                
+                this.addActivity('🔄 New round started! Get your free ticket!');
+                this.addActivity('🚀 Fresh bomb loaded and ready to explode!');
+            }
+        }
+        
+        // Add shake animation for explosion effect
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Initialize the game when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new LotteryBomb();
+        });
+    </script>
+</body>
+</html>
